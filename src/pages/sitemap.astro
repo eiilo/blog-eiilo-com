@@ -1,0 +1,24 @@
+---
+import Page from "../layouts/Page.astro";
+import { getPosts } from "../data/content";
+
+const posts = await getPosts();
+---
+
+<Page title="Sitemap" description="Every page on blog.eiilo.com.">
+  <ul>
+    <li>
+      <a href="/">Blog</a>
+      {
+        posts.length > 0 && (
+          <ul>
+            {posts.map((post) => <li><a href={`/${post.id}/`}>{post.data.title}</a></li>)}
+          </ul>
+        )
+      }
+    </li>
+    <li><a href="/rss.xml">RSS feed</a></li>
+    <li><a href="/sitemap-index.xml">Sitemap for search engines (XML)</a></li>
+    <li><a href="https://eiilo.com/sitemap/">The sitemap of eiilo.com</a>, which lists every eiilo site</li>
+  </ul>
+</Page>

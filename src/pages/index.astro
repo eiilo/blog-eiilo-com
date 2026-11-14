@@ -1,0 +1,20 @@
+---
+import Page from "../layouts/Page.astro";
+import EntryCards from "../components/EntryCards.astro";
+import { getPosts } from "../data/content";
+
+const posts = await getPosts();
+const years = [...new Set(posts.map((post) => post.data.date.getUTCFullYear()))];
+---
+
+<Page title="Blog" prose={false}>
+  {posts.length === 0 && <p class="empty">No posts yet.</p>}
+  {
+    years.map((year) => (
+      <>
+        <h2 class="year">{year}</h2>
+        <EntryCards entries={posts.filter((post) => post.data.date.getUTCFullYear() === year)} base="/" empty="" />
+      </>
+    ))
+  }
+</Page>
